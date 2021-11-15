@@ -1,3 +1,7 @@
+class value_too_big_error(Exception):
+    pass
+
+
 class pxm_file():
     what_type:str
     type_dyctionary = {
@@ -25,7 +29,11 @@ class pxm_file():
         if self.type_dyctionary[what_type] == 'P1':
             max_value = 1
     def SetPixel(self,x,y,val):
-        pass
+        if val<= self.max_value:
+            matrix[y][x] = val 
+        else:
+            raise value_too_big_error ("Given value is bgger than max value you chosen")       
+
     def GetPixel(self,x,y):
         return self.matrix[y][x]
     def SaveToFile(self,path:str):
@@ -49,9 +57,3 @@ class pxm_file():
         file.close()
 
 
-a = pxm_file(2, 2, 10,20,'P2')
-print(a.width)
-print(a.height)
-print(a.matrix)
-
-a.SaveToFile("HelloWorld.pgm")
