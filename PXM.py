@@ -27,7 +27,7 @@ class pxm_file():
         self.matrix = [[default_value]*self.width]*self.height
         self.what_type = self.type_dyctionary[what_type]
         if self.type_dyctionary[what_type] == 'P1':
-            max_value = 1
+            self.max_value = 1
     def SetPixel(self,x,y,val):
         if val<= self.max_value:
             matrix[y][x] = val 
