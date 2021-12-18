@@ -123,9 +123,11 @@ void draw_sierp_triangle(pgm_file_8bit * pbm,Vector2 p1, Vector2 p2, Vector2 p3)
 {
 
     Vector2 one = between_points(p1.x,p1.y,p2.x,p2.y);
-     Vector2 two  = between_points(p1.x,p1.y,p3.x,p3.y);;
-     Vector2 three =between_points(p3.x,p3.y,p2.x,p2.y);;
+    Vector2 two  = between_points(p1.x,p1.y,p3.x,p3.y);;
+    Vector2 three =between_points(p3.x,p3.y,p2.x,p2.y);;
+    
     draw_triangle(pbm, one,two,three);
+
     if (distance(p1.x,p1.y,p2.x,p2.y) > 50.0f)
     {   
         // draw left bottom triangle
@@ -170,8 +172,10 @@ int main (int argc, char *argv[])
     if(argc>1)
         draw_sierp_triangle(&pgm,(Vector2){0,pgm.height-1},(Vector2){pgm.width/2,0},(Vector2){pgm.width-1,pgm.height-1}  );
     else
-        draw_gradient(&pgm);
-    save_raw_8bit_pgm_to_file("test3.pgm",&pgm);
+        draw_gradient(&pgm);  
+    save_raw_8bit_pgm_to_file("example.pgm",&pgm);
+    save_plain_8bit_pgm_to_file("example_plain.pgm",&pgm);
+
 
 
 

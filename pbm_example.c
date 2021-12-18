@@ -68,11 +68,12 @@ Vector2* get_path(float p1x,float p1y,float p2x,float p2y)
     ret_array[0].x = size/sizeof(struct Vector2) +1 ; //array_stack_ptr-1;
     return ret_array;
 }
-
+// p1 = top-left point, p2, bottom point, p3= right-top one.
 void draw_triangle(pbm_file* bit_map, Vector2 p1,Vector2 p2,Vector2 p3)
 {
     Vector2 *wall1 = get_path(p1.x,p1.y,p2.x,p2.y);
     Vector2 *wall2 = get_path(p3.x,p3.y,p2.x,p2.y);
+
     for(int i =0; i<(int)(wall1[0].x);i++)
     {   
         // printf("loop %i \n",i);
@@ -111,9 +112,12 @@ void draw_sierp_triangle(pbm_file * pbm,Vector2 p1, Vector2 p2, Vector2 p3)
 {
 
     Vector2 one = between_points(p1.x,p1.y,p2.x,p2.y);
-     Vector2 two  = between_points(p1.x,p1.y,p3.x,p3.y);;
-     Vector2 three =between_points(p3.x,p3.y,p2.x,p2.y);;
+    Vector2 two  = between_points(p1.x,p1.y,p3.x,p3.y);
+    Vector2 three =between_points(p3.x,p3.y,p2.x,p2.y);
+
     draw_triangle(pbm, one,two,three);
+
+
     if (distance(p1.x,p1.y,p2.x,p2.y) > 50.0f)
     {   
         // draw left bottom triangle
@@ -149,12 +153,19 @@ int main (int argc, char *argv[])
 
     draw_sierp_triangle(&pbm,(Vector2){0,pbm.height-1},(Vector2){pbm.width/2,0},(Vector2){pbm.width-1,pbm.height-1}  );
 
-    save_raw_pbm_to_file("test3.pbm",&pbm);
+    save_raw_pbm_to_file("example.pbm",&pbm);
 
 
+    for(int y=0; y<pbm.height;y++)
+    {
+        for(int x=0;x<pbm.width;x++)
+        {
+            write_bit(&pbm,x,y,get_bit(&pbm,x,y));
+        }
 
-  
-
+    }
+    save_raw_pbm_to_file("test.pbm",&pbm);
+    save_plain_pbm_to_file("test_plain.pbm",&pbm);
 
     return 0;
 }
